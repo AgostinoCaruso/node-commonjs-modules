@@ -117,9 +117,11 @@ const { GetAllHobbies } = require("./hobbies.js");
 //add custom name/hobby
 let n1 = "", n2 = "";
 let h1 = "", h2 = "", h3 = "";
-
-//WITH CHOICE--------------------------------------------------------
+//to prevent a double hobby word, isnt perfect since it has only 1 var to store the prev number, hobbies are 3
+let ranNum = 0,lastNum=-1;
+//!WITH CHOICE--------------------------------------------------------
 //#region CHOICE
+
 const readline = require("readline");
 const rl = readline.createInterface({
     input: process.stdin,
@@ -127,14 +129,16 @@ const rl = readline.createInterface({
 });
 
 GetInputFromUser();
+
 //#endregion
-//STANDARD--------------------------------------------------------
+//!STANDARD--------------------------------------------------------
 //#region STANDARD
+
 //0 for obj 1 for string
-/*
-const myObject = PrintObject(1);
-console.log(myObject);
-*/
+
+// const myObject = GetObject(0);
+// console.log(myObject);
+
 //#endregion
 function GetObject(num) {
     switch (num) {
@@ -170,9 +174,14 @@ function CheckTypo(string, stringDefault) {
     return string || stringDefault;
 }
 //if you dont type a name or hobby then he will random catch a word with the same context
+let lastNum1 = -1,lastNum2 = -1,lastNum3 = -1;
 function RandomGenString(array) {
     let randomString = "";
-    let ranNum = GetRandomNum(array.length);
+    //let ranNum = GetRandomNum(array.length);
+    while(ranNum===lastNum){
+        ranNum = GetRandomNum(array.length);
+    }
+    lastNum = ranNum;
     return randomString = array[ranNum];
 }
 //generate random num
