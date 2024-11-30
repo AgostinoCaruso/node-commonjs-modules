@@ -10,3 +10,11 @@
     2. Importa la tua funzione da hobbies.js
     3. Crea una funzione che non ha parametri. La funzione dovrebbe restituire un oggetto con due proprietà: fullName ed hobbies. All'interno della tua funzione, usa le tue due funzioni precedenti per costruire l'oggetto.
  */
+
+
+const { GetFullName } = require("./names.js");
+let n1 = "Agostino", n2 = "Caruso";
+const { GetAllHobbies } = require("./hobbies.js");
+let h1 = "rugby", h2 = "gym", h3 = "";
+console.log(GetFullName(n1 || "default", n2 || "default"));
+console.log(GetAllHobbies(h1,h2,h3));
