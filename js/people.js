@@ -12,46 +12,178 @@
  */
 
 //const myCont = require("./names.js");
+//liste
+const nomi = [
+    "Alessandro",
+    "Francesco",
+    "Luca",
+    "Marco",
+    "Giulia",
+    "Sofia",
+    "Emma",
+    "Olivia",
+    "Lorenzo",
+    "Davide",
+    "Elijah",
+    "James",
+    "Gabriel",
+    "Michael",
+    "Daniel",
+    "Sophia",
+    "Mia",
+    "Charlotte",
+    "Amelia",
+    "Harper",
+    "Evelyn",
+    "Abigail",
+    "Emily",
+    "Hannah"
+];
+const cognomi = [
+    "Rossi",
+    "Bianchi",
+    "Romano",
+    "Esposito",
+    "Rizzo",
+    "Ferrari",
+    "Russo",
+    "Marino",
+    "Bruno",
+    "Conti",
+    "De Luca",
+    "Giordano",
+    "Lombardi",
+    "Moretti",
+    "Santoro",
+    "Smith",
+    "Johnson",
+    "Williams",
+    "Jones",
+    "Brown",
+    "Davis",
+    "Miller",
+    "Wilson",
+    "Moore",
+    "Taylor",
+    "Anderson",
+    "Thomas",
+    "Jackson",
+    "White",
+    "Harris",
+    "Martinez",
+    "Garcia",
+    "Rodriguez",
+    "Lopez",
+    "Gonzalez"
+];
+const hobby = [
+    "Calcio",
+    "Pallacanestro",
+    "Tennis",
+    "Nuoto",
+    "Ciclismo",
+    "Corsa",
+    "Pattinaggio",
+    "Sci",
+    "Snowboard",
+    "Surf",
+    "Kite surf",
+    "Vela",
+    "Pescare",
+    "Caccia",
+    "Fotografia",
+    "Musica",
+    "Pittura",
+    "Scultura",
+    "Cucina",
+    "Giardinaggio",
+    "Lettura",
+    "Scrittura",
+    "Viaggiare",
+    "Esplorare",
+    "Ricercare",
+    "Sviluppare software",
+    "Giochi da tavolo",
+    "Videogiochi",
+    "Yoga",
+    "Meditazione",
+    "Passeggiare",
+    "Cantare",
+    "Ballare"
+];
+
 const { GetFullName } = require("./names.js");
-let n1 = "Agostino", n2 = "Caruso";
+let n1 = "", n2 = "";
 const { GetAllHobbies } = require("./hobbies.js");
-let h1 = "rugby", h2 = "gym", h3 = "";
+let h1 = "", h2 = "", h3 = "";
 
+//WITH CHOICE--------------------------------------------------------
+//#region CHOICE
+const readline = require("readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
+rl.question("------------\nwrite 0 for obj and 1 for strings\n------------\n", (value) => {
+    const numValue = parseInt(value);
+    const myObject = GetObject(numValue);
+    console.clear();
+    switch (numValue) {
+        case 0:
+            console.log(myObject);
+            break;
+        case 1:
+            console.log(`name: ${myObject.fullName}, and my hobbies are: ${myObject.hobby}`);
+            break;
+        default:
+            console.log("wrong choice");
+            break;
+    }
+    rl.close();
+});
+//#endregion
+//STANDARD--------------------------------------------------------
+//#region STANDARD
 //0 for obj 1 for string
-const myObject = PrintObject(0);
+/*
+const myObject = PrintObject(1);
 console.log(myObject);
-
-function PrintObject(num) {
+*/
+//#endregion
+function GetObject(num) {
     switch (num) {
         case 0://oggetti
             return {
-                fullName: GetFullName(n1, n2),
-                hobby: GetAllHobbies(CheckTypo(h1,"no hobby"), CheckTypo(h2,"no hobby"), CheckTypo(h3,"no hobby")),
+                fullName: GetFullName(CheckTypo(n1, RandomGenString(nomi)), CheckTypo(n2, RandomGenString(cognomi))),
+                hobby: GetAllHobbies(CheckTypo(h1, RandomGenString(hobby)), CheckTypo(h2, RandomGenString(hobby)), CheckTypo(h3, RandomGenString(hobby))),
             }
         case 1://stringhe
             return {
-                fullName: ObjToString(GetFullName(CheckTypo(n1,""), CheckTypo(n2,""))),
-                hobby: ObjToString(GetAllHobbies(CheckTypo(h1,"no hobby"), CheckTypo(h2,"no hobby"), CheckTypo(h3,"no hobby"))),
+                fullName: ObjToString(GetFullName(CheckTypo(n1, RandomGenString(nomi)), CheckTypo(n2, RandomGenString(cognomi)))),
+                hobby: ObjToString(GetAllHobbies(CheckTypo(h1, RandomGenString(hobby)), CheckTypo(h2, RandomGenString(hobby)), CheckTypo(h3, RandomGenString(hobby)))),
             }
     }
-
 }
-
-function ObjToString(obj){
+//return a string from an object es: person={firstName,secondName} => "firstName secondName" and cut last white space
+function ObjToString(obj) {
     let acc = "";
-    for(let key in obj){
-        acc+=obj[key] + " ";
+    for (let key in obj) {
+        acc += obj[key] + " ";
     }
     return acc.trim();
 }
-
-function CheckTypo(string, stringDefault){
+//check if you dont write a name or an hobby, returning stringDefault which i implement with RandomGenString taking argument from arrays
+function CheckTypo(string, stringDefault) {
     return string || stringDefault;
 }
-
-function RandomName(listaNomi){
-    let randomName = "";
-    
+//if you dont type a name or hobby then he will random catch a word with the same context
+function RandomGenString(array) {
+    let randomString = "";
+    let ranNum = GetRandomNum(array.length);
+    return randomString = array[ranNum];
 }
-
+//generate random num
+function GetRandomNum(maxNum) {
+    return Math.floor(Math.random() * maxNum);
+}
