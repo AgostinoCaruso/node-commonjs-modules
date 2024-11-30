@@ -113,8 +113,9 @@ const hobby = [
 ];
 
 const { GetFullName } = require("./names.js");
-let n1 = "", n2 = "";
 const { GetAllHobbies } = require("./hobbies.js");
+//add custom name/hobby
+let n1 = "", n2 = "";
 let h1 = "", h2 = "", h3 = "";
 
 //WITH CHOICE--------------------------------------------------------
@@ -125,23 +126,7 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-rl.question("------------\nwrite 0 for obj and 1 for strings\n------------\n", (value) => {
-    const numValue = parseInt(value);
-    const myObject = GetObject(numValue);
-    console.clear();
-    switch (numValue) {
-        case 0:
-            console.log(myObject);
-            break;
-        case 1:
-            console.log(`name: ${myObject.fullName}, and my hobbies are: ${myObject.hobby}`);
-            break;
-        default:
-            console.log("wrong choice");
-            break;
-    }
-    rl.close();
-});
+GetInputFromUser();
 //#endregion
 //STANDARD--------------------------------------------------------
 //#region STANDARD
@@ -168,10 +153,17 @@ function GetObject(num) {
 //return a string from an object es: person={firstName,secondName} => "firstName secondName" and cut last white space
 function ObjToString(obj) {
     let acc = "";
+    let count = 0;
+    const objLength = Object.keys(obj).length;
     for (let key in obj) {
-        acc += obj[key] + " ";
+        count++;
+        if(count!==objLength){
+            acc += obj[key] + " ";
+        }else{
+            acc += obj[key] + "!";
+        }
     }
-    return acc.trim();
+    return acc;
 }
 //check if you dont write a name or an hobby, returning stringDefault which i implement with RandomGenString taking argument from arrays
 function CheckTypo(string, stringDefault) {
@@ -186,4 +178,25 @@ function RandomGenString(array) {
 //generate random num
 function GetRandomNum(maxNum) {
     return Math.floor(Math.random() * maxNum);
+}
+function GetInputFromUser(){
+    rl.question("------------\nwrite 0 for obj and 1 for strings\n------------\n", (value) => {
+        //i cast the string from input to an integer
+        const numValue = parseInt(value);
+        //i pass the obj or a string from the GetObject func
+        const myObject = GetObject(numValue);
+        console.clear();
+        switch (numValue) {
+            case 0:
+                console.log(myObject);
+                break;
+            case 1:
+                console.log(`My name is: ${myObject.fullName}\nMy hobbies are: ${myObject.hobby}\n\n`);
+                break;
+            default:
+                console.log("wrong choice");
+                break;
+        }
+        rl.close();
+    });
 }
