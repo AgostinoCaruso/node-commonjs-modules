@@ -4,7 +4,8 @@
   "main": "./js/people.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node people.js"
+    "start":"node ./js/people.js",
+    "dev":"node --watch ./js/people.js"
   },
   "keywords": [],
   "author": "",

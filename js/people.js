@@ -11,17 +11,47 @@
     3. Crea una funzione che non ha parametri. La funzione dovrebbe restituire un oggetto con due proprietà: fullName ed hobbies. All'interno della tua funzione, usa le tue due funzioni precedenti per costruire l'oggetto.
  */
 
-const myCont = require("./names.js");
-//const { GetFullName } = require("./names.js");
+//const myCont = require("./names.js");
+const { GetFullName } = require("./names.js");
 let n1 = "Agostino", n2 = "Caruso";
 const { GetAllHobbies } = require("./hobbies.js");
 let h1 = "rugby", h2 = "gym", h3 = "";
-function PrintObject() {
-    return {
-        fullName: myCont.GetFullName(n1, n2),
-        hobbies: GetAllHobbies(h1, h2, h3),
+
+
+//0 for obj 1 for string
+const myObject = PrintObject(0);
+console.log(myObject);
+
+function PrintObject(num) {
+    switch (num) {
+        case 0://oggetti
+            return {
+                fullName: GetFullName(n1, n2),
+                hobby: GetAllHobbies(CheckTypo(h1,"no hobby"), CheckTypo(h2,"no hobby"), CheckTypo(h3,"no hobby")),
+            }
+        case 1://stringhe
+            return {
+                fullName: ObjToString(GetFullName(CheckTypo(n1,""), CheckTypo(n2,""))),
+                hobby: ObjToString(GetAllHobbies(CheckTypo(h1,"no hobby"), CheckTypo(h2,"no hobby"), CheckTypo(h3,"no hobby"))),
+            }
     }
+
 }
-console.log(PrintObject());
-// console.log(GetFullName(n1 || "default", n2 || "default"));
-// console.log(GetAllHobbies(h1,h2,h3));
+
+function ObjToString(obj){
+    let acc = "";
+    for(let key in obj){
+        acc+=obj[key] + " ";
+    }
+    return acc.trim();
+}
+
+function CheckTypo(string, stringDefault){
+    return string || stringDefault;
+}
+
+function RandomName(listaNomi){
+    let randomName = "";
+    
+}
+
